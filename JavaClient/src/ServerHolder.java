@@ -21,7 +21,7 @@ public class ServerHolder extends JPanel {
 	 */
 	public ServerHolder() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
+		//dick in ass
 		JLabel lblNewLabel = new JLabel("IMAGE PLACEHOLDER");
 		add(lblNewLabel);
 		
