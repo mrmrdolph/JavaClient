@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.Color;
 
 public class ServerHolder extends JPanel {
 	private JTextField ipTextField;
@@ -20,6 +21,7 @@ public class ServerHolder extends JPanel {
 	 * Create the panel.
 	 */
 	public ServerHolder() {
+		setBackground(new Color(176, 224, 230));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		//dick in ass
 		JLabel lblNewLabel = new JLabel("IMAGE PLACEHOLDER");
