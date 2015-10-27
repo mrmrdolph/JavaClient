@@ -1,17 +1,20 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.GridLayout;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JTextField;
+import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class ClientGui extends JFrame {
 
@@ -66,14 +69,14 @@ public class ClientGui extends JFrame {
 		JLabel lblIp = new JLabel("I.P");
 		panel_1.add(lblIp);
 		
-		ipTextField = new JTextField();
+		ipTextField = new JTextField("localhost");
 		panel_1.add(ipTextField);
 		ipTextField.setColumns(10);
 		
 		JLabel lblPort = new JLabel("PORT");
 		panel_1.add(lblPort);
 		
-		portTextField = new JTextField();
+		portTextField = new JTextField("9090");
 		panel_1.add(portTextField);
 		portTextField.setColumns(10);
 		
@@ -85,10 +88,20 @@ public class ClientGui extends JFrame {
 	
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ServerHolder server = new ServerHolder(ipTextField.getText(),portTextField.getText());
-				ipTextField.setText("");
-				portTextField.setText("");
-				panel.add(server);
+				Socket serverSocket = null;
+				boolean socketConnected = true;
+				try {
+					serverSocket = new Socket(ipTextField.getText(),Integer.parseInt(portTextField.getText()));
+//					serverSocket = new Socket("localhost",9090);
+				} catch (NumberFormatException | IOException e1) {
+//					e1.printStackTrace();
+					System.out.println("No Server found at " + ipTextField.getText()+":"+Integer.parseInt(portTextField.getText()));
+					socketConnected = false;
+				}
+				if (socketConnected) {
+					ServerHolder server = new ServerHolder(serverSocket, ipTextField.getText(),Integer.parseInt(portTextField.getText()));
+					panel.add(server);
+				}
 				panel.validate();
 				
 			}
