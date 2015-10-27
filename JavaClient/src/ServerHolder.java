@@ -10,32 +10,25 @@ import javax.swing.JTextField;
 import java.awt.Color;
 
 public class ServerHolder extends JPanel {
-	private JTextField ipTextField;
-	private JTextField portTextField;
 	private JTextField resolutionTextField;
 	private JTextField frequencyTextField;
 	private JButton btnConnect;
 	private JButton btnRemove;
+	private String ip;
+	private String port;
 
 	/**
 	 * Create the panel.
 	 */
-	public ServerHolder() {
+	public ServerHolder(String ip, String port) {
+		this.ip=ip;
+		this.port=port;
+		System.out.println(ip+" "+port);
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		//dick in ass
 		JLabel lblNewLabel = new JLabel("IMAGE PLACEHOLDER");
 		add(lblNewLabel);
-		
-		ipTextField = new JTextField();
-		ipTextField.setToolTipText("IP");
-		add(ipTextField);
-		ipTextField.setColumns(10);
-		
-		portTextField = new JTextField();
-		portTextField.setToolTipText("PORT");
-		add(portTextField);
-		portTextField.setColumns(10);
 		
 		resolutionTextField = new JTextField();
 		resolutionTextField.setToolTipText("RESOLUTION");
