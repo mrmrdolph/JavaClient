@@ -41,6 +41,7 @@ public class ServerHolder extends JPanel {
 		this.socket = s;
 		this.serverIP = ip;
 		this.port = port;
+		//rtprwrwwpoå
 
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
