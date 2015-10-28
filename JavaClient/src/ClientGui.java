@@ -69,14 +69,14 @@ public class ClientGui extends JFrame {
 		JLabel lblIp = new JLabel("I.P");
 		panel_1.add(lblIp);
 		
-		ipTextField = new JTextField("localhost");
+		ipTextField = new JTextField("192.168.20.246");
 		panel_1.add(ipTextField);
 		ipTextField.setColumns(10);
 		
 		JLabel lblPort = new JLabel("PORT");
 		panel_1.add(lblPort);
 		
-		portTextField = new JTextField("9090");
+		portTextField = new JTextField("8080");
 		panel_1.add(portTextField);
 		portTextField.setColumns(10);
 		

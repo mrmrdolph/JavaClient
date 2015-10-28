@@ -7,9 +7,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -120,7 +121,8 @@ public class ServerHolder extends JPanel {
 			}
 
 			
-			return scaleDown(bImageFromConvert, 0.25, 0.25);
+			return bImageFromConvert;
+//			return scaleDown(bImageFromConvert, 0.25, 0.25);
 		}
 		
 		public BufferedImage scaleDown(BufferedImage bImageFromConvert, double widthScale, double heightScale) {
@@ -139,13 +141,30 @@ public class ServerHolder extends JPanel {
 			// Again, probably better to store these objects references in the
 			// support class
 			InputStream in = socket.getInputStream();
-			DataInputStream dataInStream = new DataInputStream(in);
-
-			int len = dataInStream.readInt();
-			byte[] data = new byte[len];
-			if (len > 0) {
-				dataInStream.readFully(data);
-			}
+//			DataInputStream dataInStream = new DataInputStream(in);
+//			byte[] data = new byte[1200];
+//			int len = in.read(data, 0, 1200);
+//			int len = dataInStream.readInt();
+//			System.out.println("size of pic: "+len);
+//			System.out.println();
+//			try {
+//			 data = new byte[1024];
+//			if (len > 0) {
+//				dataInStream.readFully(data);
+//			}
+//			} catch (EOFException e) {
+//				e.printStackTrace();
+//			}
+			// read from the stream  
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+			byte[] data = new byte[ 110000 ];  
+			int bytesRead = -1;  
+			while( ( bytesRead = in.read( data ) ) != -1 ) {  
+			    baos.write( data, 0, bytesRead );  
+			    System.out.println("loop");
+			    System.out.println(bytesRead);
+			} // while 
+			System.out.println(data.length);
 			return data;
 		}
 
