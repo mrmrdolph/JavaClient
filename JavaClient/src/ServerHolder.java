@@ -3,6 +3,8 @@ import java.awt.Container;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -31,18 +33,18 @@ public class ServerHolder extends JPanel {
 
 	/**
 	 * Create the panel.
-	 * @throws IOException 
-	 * @throws UnknownHostException 
+	 * 
+	 * @throws IOException
+	 * @throws UnknownHostException
 	 */
 	public ServerHolder(Socket s, String ip, int port) {
 		this.socket = s;
 		this.serverIP = ip;
 		this.port = port;
-		
+
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
-		
+
 		currentImageJlabel = new JLabel("IMAGE PLACEHOLDER");
 		add(currentImageJlabel);
 
@@ -68,14 +70,14 @@ public class ServerHolder extends JPanel {
 			}
 		});
 		add(btnRemove);
-		
+
 		/**
 		 * Start receiving from serversocket
 		 */
 		Thread t = new Thread(new ReceiveImageRunner());
 		t.start();
 	}
-	
+
 	private void deleteMe() {
 		Container parent = btnRemove.getParent(); // this JPanel
 		Container parentparent = parent.getParent(); // JFrame
@@ -83,17 +85,17 @@ public class ServerHolder extends JPanel {
 		parentparent.validate();
 		parentparent.repaint();
 	}
-	
+
 	private class ReceiveImageRunner implements Runnable {
 
 		@Override
 		public void run() {
 			System.out.println("Open to receive from server.");
 			/**
-			 * TODO: 1. ADD LOOP that receives the images 
-			 *       2. UPDATE Jlabel once image has been received 
+			 * TODO: 1. ADD LOOP that receives the images 2. UPDATE Jlabel once
+			 * image has been received
 			 */
-			
+
 			Image image = null;
 			try {
 				image = convertBytesToBuffImage(readBytes(socket));
@@ -101,10 +103,11 @@ public class ServerHolder extends JPanel {
 				e.printStackTrace();
 			}
 			ImageIcon imgIcon = new ImageIcon(image);
+
 			currentImageJlabel.setIcon(imgIcon);
-			
+
 		}
-		
+
 		public BufferedImage convertBytesToBuffImage(byte[] imgAsBytes) {
 			InputStream in = new ByteArrayInputStream(imgAsBytes);
 			BufferedImage bImageFromConvert = null;
@@ -113,22 +116,37 @@ public class ServerHolder extends JPanel {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			return bImageFromConvert;
+
+			
+			return scaleDown(bImageFromConvert, 0.25, 0.25);
 		}
 		
-	    public byte[] readBytes(Socket socket) throws IOException {
-	        // Again, probably better to store these objects references in the support class
-	        InputStream in = socket.getInputStream();
-	        DataInputStream dataInStream = new DataInputStream(in);
+		public BufferedImage scaleDown(BufferedImage bImageFromConvert, double widthScale, double heightScale) {
+			int w = bImageFromConvert.getWidth();
+			int h = bImageFromConvert.getHeight();
+			BufferedImage after = new BufferedImage(w, h,
+					BufferedImage.TYPE_INT_ARGB);
+			AffineTransform at = new AffineTransform();
+			at.scale(widthScale, heightScale);
+			AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+			after = scaleOp.filter(bImageFromConvert, after);
+			return after;
+		}
 
-	        int len = dataInStream.readInt();
-	        byte[] data = new byte[len];
-	        if (len > 0) {
-	            dataInStream.readFully(data);
-	        }
-	        return data;
-	    }
-		
+		public byte[] readBytes(Socket socket) throws IOException {
+			// Again, probably better to store these objects references in the
+			// support class
+			InputStream in = socket.getInputStream();
+			DataInputStream dataInStream = new DataInputStream(in);
+
+			int len = dataInStream.readInt();
+			byte[] data = new byte[len];
+			if (len > 0) {
+				dataInStream.readFully(data);
+			}
+			return data;
+		}
+
 	}
 
 }
