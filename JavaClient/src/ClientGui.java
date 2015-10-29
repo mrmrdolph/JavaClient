@@ -69,7 +69,7 @@ public class ClientGui extends JFrame {
 		JLabel lblIp = new JLabel("I.P");
 		panel_1.add(lblIp);
 		
-		ipTextField = new JTextField("192.168.20.246");
+		ipTextField = new JTextField("192.168.20.249");
 		panel_1.add(ipTextField);
 		ipTextField.setColumns(10);
 		

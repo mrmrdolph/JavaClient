@@ -8,6 +8,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -100,10 +101,12 @@ public class ServerHolder extends JPanel {
 			 */
 
 			Image image = null;
-			try {
-				image = convertBytesToBuffImage(readBytes(socket));
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (socket.isConnected()) {
+				System.out.println("Connected:"+ socket.isConnected());
+//				image = scaleDown(readImg(socket),50,50);
+				image = readImg(socket);
+			} else {
+				System.out.println("Not connected to socket");
 			}
 			ImageIcon imgIcon = new ImageIcon(image);
 
@@ -137,35 +140,16 @@ public class ServerHolder extends JPanel {
 			return after;
 		}
 
-		public byte[] readBytes(Socket socket) throws IOException {
-			// Again, probably better to store these objects references in the
-			// support class
-			InputStream in = socket.getInputStream();
-//			DataInputStream dataInStream = new DataInputStream(in);
-//			byte[] data = new byte[1200];
-//			int len = in.read(data, 0, 1200);
-//			int len = dataInStream.readInt();
-//			System.out.println("size of pic: "+len);
-//			System.out.println();
-//			try {
-//			 data = new byte[1024];
-//			if (len > 0) {
-//				dataInStream.readFully(data);
-//			}
-//			} catch (EOFException e) {
-//				e.printStackTrace();
-//			}
-			// read from the stream  
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-			byte[] data = new byte[ 110000 ];  
-			int bytesRead = -1;  
-			while( ( bytesRead = in.read( data ) ) != -1 ) {  
-			    baos.write( data, 0, bytesRead );  
-			    System.out.println("loop");
-			    System.out.println(bytesRead);
-			} // while 
-			System.out.println(data.length);
-			return data;
+		
+		public BufferedImage readImg(Socket socket) {
+			try {
+				System.out.println("hi");
+				return ImageIO.read(socket.getInputStream());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("bye");
+			return null;
 		}
 
 	}
