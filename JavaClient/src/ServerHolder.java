@@ -7,24 +7,24 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class ServerHolder extends JPanel {
-	private JTextField resolutionTextField;
 	private JTextField frequencyTextField;
 	private JButton btnConnect;
 	private JButton btnRemove;
@@ -32,6 +32,11 @@ public class ServerHolder extends JPanel {
 	private int port;
 	private Socket socket;
 	private JLabel currentImageJlabel;
+	private JPanel panel;
+	private JRadioButton rdbtnNewRadioButton;
+	private JRadioButton rdbtnRes;
+	private JRadioButton radioButton;
+	private JRadioButton radioButton_1;
 
 	/**
 	 * Create the panel.
@@ -51,12 +56,66 @@ public class ServerHolder extends JPanel {
 
 		currentImageJlabel = new JLabel("IMAGE PLACEHOLDER");
 		add(currentImageJlabel);
-
-		resolutionTextField = new JTextField();
-		resolutionTextField.setToolTipText("RESOLUTION");
-		add(resolutionTextField);
-		resolutionTextField.setColumns(10);
-
+		
+		panel = new JPanel();
+		add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		ActionListener actionListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OutputStream out = null;
+				try {
+					 out = new DataOutputStream(socket.getOutputStream());
+					 out.write(30);
+					 out.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+				if (rdbtnNewRadioButton.isSelected()) {
+					System.out.println("1");
+					
+				} else if (rdbtnRes.isSelected()) {
+					System.out.println("2");
+					
+				} else if (radioButton.isSelected()) {
+					System.out.println("3");
+					
+				} else if (radioButton_1.isSelected()) {
+					System.out.println("4");
+					
+				} 
+				
+			}
+		};
+		
+		rdbtnNewRadioButton = new JRadioButton("res1");
+		panel.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton.addActionListener(actionListener);
+		
+		rdbtnRes = new JRadioButton("res2");
+		panel.add(rdbtnRes);
+		rdbtnRes.addActionListener(actionListener);
+		
+		radioButton = new JRadioButton("res3");
+		panel.add(radioButton);
+		radioButton.addActionListener(actionListener);
+		
+		radioButton_1 = new JRadioButton("res4");
+		panel.add(radioButton_1);
+		radioButton_1.addActionListener(actionListener);
+		
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnNewRadioButton);
+		group.add(rdbtnRes);
+		group.add(radioButton);
+		group.add(radioButton_1);
+		rdbtnNewRadioButton.setSelected(true);
+		
 		frequencyTextField = new JTextField();
 		frequencyTextField.setToolTipText("FREQUENCY");
 		add(frequencyTextField);
@@ -70,7 +129,11 @@ public class ServerHolder extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				deleteMe();
 				// TODO: CLOSE SOCKETS AND STUFF
-
+				try {
+					socket.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		add(btnRemove);
@@ -105,6 +168,7 @@ public class ServerHolder extends JPanel {
 				System.out.println("Connected:"+ socket.isConnected());
 //				image = scaleDown(readImg(socket),50,50);
 				image = readImg(socket);
+				System.out.println(image);
 			} else {
 				System.out.println("Not connected to socket");
 			}
@@ -112,6 +176,7 @@ public class ServerHolder extends JPanel {
 
 			currentImageJlabel.setIcon(imgIcon);
 
+ 
 		}
 
 		public BufferedImage convertBytesToBuffImage(byte[] imgAsBytes) {
