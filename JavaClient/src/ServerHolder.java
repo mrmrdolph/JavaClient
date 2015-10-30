@@ -164,18 +164,22 @@ public class ServerHolder extends JPanel {
 			 */
 
 			Image image = null;
-			if (socket.isConnected()) {
-				System.out.println("Connected:"+ socket.isConnected());
-//				image = scaleDown(readImg(socket),50,50);
-				image = readImg(socket);
-				System.out.println("image received: "+image.toString());
-				System.out.println(image);
-			} else {
-				System.out.println("Not connected to socket");
+			while (true) {
+				if (socket.isConnected()) {
+					System.out.println("Connected:"+ socket.isConnected());
+	//				image = scaleDown(readImg(socket),50,50);
+					image = readImg(socket);
+					if (image == null) continue;
+					System.out.println("image received: "+image.toString());
+					System.out.println(image);
+				} else {
+					System.out.println("Not connected to socket");
+				}
+				ImageIcon imgIcon = new ImageIcon(image);
+	
+				currentImageJlabel.setIcon(imgIcon);
+				currentImageJlabel.validate();
 			}
-			ImageIcon imgIcon = new ImageIcon(image);
-
-			currentImageJlabel.setIcon(imgIcon);
 
  
 		}
