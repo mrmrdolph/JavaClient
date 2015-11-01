@@ -37,7 +37,7 @@ public class ServerHolder extends JPanel {
 	private JRadioButton rdbtnRes;
 	private JRadioButton radioButton;
 	private JRadioButton radioButton_1;
-
+//hzdhsdak
 	/**
 	 * Create the panel.
 	 * 
