@@ -15,12 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.BoxLayout;
+import java.awt.Font;
 
 public class ClientGui extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField ipTextField;
 	private JTextField portTextField;
+	private ErrorJLabel errorMessageJLabel;
 
 	/**
 	 * Launch the application.
@@ -61,24 +64,41 @@ public class ClientGui extends JFrame {
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.setBorder(null);
 		btnNewButton.setContentAreaFilled(false); 
-	        btnNewButton.setFocusPainted(false); 
-	        btnNewButton.setOpaque(false);
+	        
+		btnNewButton.setFocusPainted(false); 
+	    btnNewButton.setOpaque(false);
 	
 		panel_1.add(btnNewButton);
 		
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+		
+		JPanel panel_3 = new JPanel();
+		panel_2.add(panel_3);
+		
 		JLabel lblIp = new JLabel("I.P");
-		panel_1.add(lblIp);
+		panel_3.add(lblIp);
 		
 		ipTextField = new JTextField("192.168.20.249");
-		panel_1.add(ipTextField);
+		panel_3.add(ipTextField);
 		ipTextField.setColumns(10);
 		
 		JLabel lblPort = new JLabel("PORT");
-		panel_1.add(lblPort);
+		panel_3.add(lblPort);
 		
 		portTextField = new JTextField("8080");
-		panel_1.add(portTextField);
+		panel_3.add(portTextField);
 		portTextField.setColumns(10);
+		
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4);
+		
+		errorMessageJLabel = new ErrorJLabel("Message"); //leave message in here so we see the string in the window builder mode
+		errorMessageJLabel.setText("");
+		errorMessageJLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		errorMessageJLabel.setForeground(Color.RED);
+		panel_4.add(errorMessageJLabel);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(176, 224, 230));
@@ -92,11 +112,11 @@ public class ClientGui extends JFrame {
 				boolean socketConnected = true;
 				try {
 					serverSocket = new Socket(ipTextField.getText(),Integer.parseInt(portTextField.getText()));
-//					serverSocket = new Socket("localhost",9090);
 				} catch (NumberFormatException | IOException e1) {
-//					e1.printStackTrace();
 					System.out.println("No Server found at " + ipTextField.getText()+":"+Integer.parseInt(portTextField.getText()));
 					socketConnected = false;
+					errorMessageJLabel.startMessage("No Server found at " + ipTextField.getText()+":"+Integer.parseInt(portTextField.getText()));
+					
 				}
 				if (socketConnected) {
 					ServerHolder server = new ServerHolder(serverSocket, ipTextField.getText(),Integer.parseInt(portTextField.getText()));

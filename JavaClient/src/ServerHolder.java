@@ -165,16 +165,21 @@ public class ServerHolder extends JPanel {
 
 			Image image = null;
 			while (true) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
 				if (socket.isConnected()) {
 					System.out.println("Connected:"+ socket.isConnected());
 	//				image = scaleDown(readImg(socket),50,50);
 					image = readImg(socket);
-					if (image == null) continue;
+					if (image == null) {
+						System.out.println("image null");
+						continue;
+					} else  {
+						
+					}
 					System.out.println("image received: "+image.toString());
 				} else {
 					System.out.println("Not connected to socket");
@@ -217,12 +222,11 @@ public class ServerHolder extends JPanel {
 		
 		public BufferedImage readImg(Socket socket) {
 			try {
-				System.out.println("hi");
-				return ImageIO.read(socket.getInputStream());
+				BufferedImage buff = ImageIO.read(socket.getInputStream());
+				return buff;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("bye");
 			return null;
 		}
 
