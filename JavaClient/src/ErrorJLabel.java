@@ -7,16 +7,26 @@ import javax.swing.JLabel;
 public class ErrorJLabel extends JLabel{
 
 	private static final long serialVersionUID = 1L;
+	private long mSecondsStandard= 1500;
 
 	public ErrorJLabel(String string) {
 		super(string);
 	}
 	
 	public void startMessage(String errMsg) {
+		startMessage(errMsg, mSecondsStandard);
+	}
+	
+	/**
+	 * 
+	 * @param errMsg
+	 * @param secs in millisecs
+	 */
+	public void startMessage(String errMsg, long millisecs) {
 		this.setText(errMsg);
 		this.validate();
 		Timer t = new Timer();
-		t.schedule(new ClearMessageTimerTask(), 1500);
+		t.schedule(new ClearMessageTimerTask(), millisecs);
 	}
 	
 	class ClearMessageTimerTask extends TimerTask {

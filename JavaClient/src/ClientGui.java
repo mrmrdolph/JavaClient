@@ -1,22 +1,22 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import java.awt.Font;
 
 public class ClientGui extends JFrame {
 
@@ -24,6 +24,9 @@ public class ClientGui extends JFrame {
 	private JTextField ipTextField;
 	private JTextField portTextField;
 	private ErrorJLabel errorMessageJLabel;
+	private JLabel searchingJLabel;
+	private boolean searching = false;
+	
 
 	/**
 	 * Launch the application.
@@ -94,8 +97,12 @@ public class ClientGui extends JFrame {
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
 		
-		errorMessageJLabel = new ErrorJLabel("Message"); //leave message in here so we see the string in the window builder mode
-		errorMessageJLabel.setText("");
+		searchingJLabel = new JLabel("");
+		searchingJLabel.setForeground(Color.BLACK);
+		searchingJLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
+		panel_4.add(searchingJLabel);
+		
+		errorMessageJLabel = new ErrorJLabel(""); 
 		errorMessageJLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		errorMessageJLabel.setForeground(Color.RED);
 		panel_4.add(errorMessageJLabel);
@@ -108,21 +115,31 @@ public class ClientGui extends JFrame {
 	
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Socket serverSocket = null;
-				boolean socketConnected = true;
-				try {
-					serverSocket = new Socket(ipTextField.getText(),Integer.parseInt(portTextField.getText()));
-				} catch (NumberFormatException | IOException e1) {
-					System.out.println("No Server found at " + ipTextField.getText()+":"+Integer.parseInt(portTextField.getText()));
-					socketConnected = false;
-					errorMessageJLabel.startMessage("No Server found at " + ipTextField.getText()+":"+Integer.parseInt(portTextField.getText()));
-					
-				}
-				if (socketConnected) {
-					ServerHolder server = new ServerHolder(serverSocket, ipTextField.getText(),Integer.parseInt(portTextField.getText()));
-					panel.add(server);
-				}
-				panel.validate();
+				if (searching) return;
+				searchingJLabel.setText("Searching..."); 		//might need to put these into SwingWorker thread
+				
+				searching = true;
+				new Thread(new Runnable() {
+				    public void run() {
+				    	Socket serverSocket = null;
+				        boolean socketConnected = true;
+				        try {
+				        	serverSocket = new Socket(ipTextField.getText(),Integer.parseInt(portTextField.getText()));
+				        } catch (NumberFormatException | IOException e1) {
+				        	System.out.println("No Server found at " + ipTextField.getText()+":"+Integer.parseInt(portTextField.getText()));
+				        	socketConnected = false;
+				        	errorMessageJLabel.startMessage("No Server found at " + ipTextField.getText()+":"+Integer.parseInt(portTextField.getText()));
+				        	
+				        }
+				        if (socketConnected) {
+				        	ServerHolder server = new ServerHolder(serverSocket, ipTextField.getText(),Integer.parseInt(portTextField.getText()));
+				        	panel.add(server);
+				        }
+				        panel.validate();
+				        searching = false;
+				        searchingJLabel.setText("");
+				    }
+				}).start();
 				
 			}
 		});
