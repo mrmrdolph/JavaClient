@@ -99,7 +99,7 @@ public class ServerHolder extends JPanel {
 				} 
 			}
 		};
-		
+		//yo momma
 		connectedIPPortlabel = new JLabel("IP " + ip + " --- Port " + port);
 		settingsPanel.add(connectedIPPortlabel);
 		
