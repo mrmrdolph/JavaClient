@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -165,9 +166,12 @@ public class ServerHolder extends JPanel {
 				btnConnect.setBorderPainted(false);
 				btnConnect.setBorder(null);
 				btnConnect.setContentAreaFilled(false); 
+				
 			        
 				btnConnect.setFocusPainted(false); 
 				btnConnect.setOpaque(false);
+				
+				btnConnect.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.DARK_GRAY));
 				btnConnect.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 					}
@@ -182,6 +186,7 @@ public class ServerHolder extends JPanel {
 					        
 						btnRemove.setFocusPainted(false); 
 						btnRemove.setOpaque(false);
+						btnRemove.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.DARK_GRAY));
 						panel.add(btnRemove);
 						btnRemove.setAlignmentX(Component.CENTER_ALIGNMENT);
 						btnRemove.addActionListener(new ActionListener() {
