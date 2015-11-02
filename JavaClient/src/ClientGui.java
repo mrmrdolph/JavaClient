@@ -49,7 +49,7 @@ public class ClientGui extends JFrame {
 	 */
 	public ClientGui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 727, 498);
+		setBounds(100, 100, 697, 467);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -90,7 +90,7 @@ public class ClientGui extends JFrame {
 		JLabel lblPort = new JLabel("PORT");
 		panel_3.add(lblPort);
 		
-		portTextField = new JTextField("8080");
+		portTextField = new JTextField("8084");
 		panel_3.add(portTextField);
 		portTextField.setColumns(10);
 		

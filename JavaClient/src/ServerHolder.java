@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import java.awt.Component;
+import java.awt.BorderLayout;
+import javax.swing.SwingConstants;
+
 public class ServerHolder extends JPanel {
 	private JTextField frequencyTextField;
 	private JButton btnConnect;
@@ -32,11 +37,12 @@ public class ServerHolder extends JPanel {
 	private int port;
 	private Socket socket;
 	private JLabel currentImageJlabel;
-	private JPanel panel;
+	private JPanel resolutionPanel;
 	private JRadioButton rdbtnNewRadioButton;
 	private JRadioButton rdbtnRes;
 	private JRadioButton radioButton;
 	private JRadioButton radioButton_1;
+	private JPanel settingsPanel;
 //hzdhsdak
 	/**
 	 * Create the panel.
@@ -54,12 +60,13 @@ public class ServerHolder extends JPanel {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		currentImageJlabel = new JLabel("IMAGE PLACEHOLDER");
+		currentImageJlabel = new JLabel("");
+		currentImageJlabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(currentImageJlabel);
 		
-		panel = new JPanel();
-		add(panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		settingsPanel = new JPanel();
+		add(settingsPanel);
+		settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
 		
 		ActionListener actionListener = new ActionListener() {
 			
@@ -67,9 +74,9 @@ public class ServerHolder extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				OutputStream out = null;
 				try {
-					 out = new DataOutputStream(socket.getOutputStream());
-					 out.write(30);
-					 out.close();
+					out = new DataOutputStream(socket.getOutputStream());
+					out.write(30);
+					out.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -92,23 +99,25 @@ public class ServerHolder extends JPanel {
 			}
 		};
 		
+		resolutionPanel = new JPanel();
+		settingsPanel.add(resolutionPanel);
+		resolutionPanel.setLayout(new BoxLayout(resolutionPanel, BoxLayout.X_AXIS));
+		
 		rdbtnNewRadioButton = new JRadioButton("res1");
-		panel.add(rdbtnNewRadioButton);
+		resolutionPanel.add(rdbtnNewRadioButton);
 		rdbtnNewRadioButton.addActionListener(actionListener);
 		
 		rdbtnRes = new JRadioButton("res2");
-		panel.add(rdbtnRes);
+		resolutionPanel.add(rdbtnRes);
 		rdbtnRes.addActionListener(actionListener);
 		
 		radioButton = new JRadioButton("res3");
-		panel.add(radioButton);
+		resolutionPanel.add(radioButton);
 		radioButton.addActionListener(actionListener);
 		
 		radioButton_1 = new JRadioButton("res4");
-		panel.add(radioButton_1);
+		resolutionPanel.add(radioButton_1);
 		radioButton_1.addActionListener(actionListener);
-		
-		
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnNewRadioButton);
 		group.add(rdbtnRes);
@@ -117,26 +126,30 @@ public class ServerHolder extends JPanel {
 		rdbtnNewRadioButton.setSelected(true);
 		
 		frequencyTextField = new JTextField();
+		settingsPanel.add(frequencyTextField);
 		frequencyTextField.setToolTipText("FREQUENCY");
-		add(frequencyTextField);
 		frequencyTextField.setColumns(10);
-
-		btnConnect = new JButton("Connect");
-		add(btnConnect);
-
-		btnRemove = new JButton("Remove");
-		btnRemove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				deleteMe();
-				// TODO: CLOSE SOCKETS AND STUFF
-				try {
-					socket.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		add(btnRemove);
+		
+				btnConnect = new JButton("Connect");
+				settingsPanel.add(btnConnect);
+				
+						btnRemove = new JButton("Remove");
+						settingsPanel.add(btnRemove);
+						btnRemove.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								deleteMe();
+								// TODO: CLOSE SOCKETS AND STUFF
+								try {
+									socket.close();
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+							}
+						});
+		
+		
+		
+		
 
 		/**
 		 * Start receiving from serversocket
