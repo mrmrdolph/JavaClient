@@ -112,6 +112,7 @@ public class ServerHolder extends JPanel {
 		settingsPanel.add(connectedIPPortlabel);
 		
 		panel_1 = new JPanel();
+		
 		panel_1.setBackground(Color.WHITE);
 		settingsPanel.add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -159,6 +160,8 @@ public class ServerHolder extends JPanel {
 		
 				
 				panel = new JPanel();
+				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+				flowLayout.setHgap(20);
 				panel.setBackground(Color.WHITE);
 				settingsPanel.add(panel);
 		
@@ -171,13 +174,12 @@ public class ServerHolder extends JPanel {
 				btnConnect.setFocusPainted(false); 
 				btnConnect.setOpaque(false);
 				
-				btnConnect.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.DARK_GRAY));
+				btnConnect.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.DARK_GRAY));
 				btnConnect.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 					}
 				});
 				panel.add(btnConnect);
-				btnConnect.setAlignmentX(Component.CENTER_ALIGNMENT);
 				
 						btnRemove = new JButton("Remove");
 						btnRemove.setBorderPainted(false);
@@ -186,7 +188,7 @@ public class ServerHolder extends JPanel {
 					        
 						btnRemove.setFocusPainted(false); 
 						btnRemove.setOpaque(false);
-						btnRemove.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.DARK_GRAY));
+						btnRemove.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.DARK_GRAY));
 						panel.add(btnRemove);
 						btnRemove.setAlignmentX(Component.CENTER_ALIGNMENT);
 						btnRemove.addActionListener(new ActionListener() {
