@@ -149,22 +149,39 @@ public class ServerHolder extends JPanel {
 		radioButton_1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		resolutionPanel.add(radioButton_1);
 		radioButton_1.addActionListener(actionListener);
+		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnNewRadioButton);
 		group.add(rdbtnRes);
 		group.add(radioButton);
 		group.add(radioButton_1);
 		rdbtnNewRadioButton.setSelected(true);
-		ButtonGroup group = new ButtonGroup();
+		
 				
 				panel = new JPanel();
 				panel.setBackground(Color.WHITE);
 				settingsPanel.add(panel);
 		
 				btnConnect = new JButton("Connect");
+				btnConnect.setBorderPainted(false);
+				btnConnect.setBorder(null);
+				btnConnect.setContentAreaFilled(false); 
+			        
+				btnConnect.setFocusPainted(false); 
+				btnConnect.setOpaque(false);
+				btnConnect.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+					}
+				});
 				panel.add(btnConnect);
 				btnConnect.setAlignmentX(Component.CENTER_ALIGNMENT);
 				
 						btnRemove = new JButton("Remove");
+						btnRemove.setBorderPainted(false);
+						btnRemove.setBorder(null);
+						btnRemove.setContentAreaFilled(false); 
+					        
+						btnRemove.setFocusPainted(false); 
+						btnRemove.setOpaque(false);
 						panel.add(btnRemove);
 						btnRemove.setAlignmentX(Component.CENTER_ALIGNMENT);
 						btnRemove.addActionListener(new ActionListener() {
