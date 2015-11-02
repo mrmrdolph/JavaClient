@@ -113,7 +113,8 @@ public class ServerHolder extends JPanel {
 		
 		panel_1 = new JPanel();
 		
-		panel_1.setBackground(Color.WHITE);
+		panel_1.setBackground(Color.PINK);
+		panel_1.setOpaque(true);
 		settingsPanel.add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
