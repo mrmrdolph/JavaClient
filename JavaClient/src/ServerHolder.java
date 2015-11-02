@@ -127,7 +127,23 @@ public class ServerHolder extends JPanel {
 		panel_1.add(frequencyTextField);
 		frequencyTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		frequencyTextField.setToolTipText("FREQUENCY");
-		frequencyTextField.setColumns(10);
+		frequencyTextField.setColumns(2);
+		
+				btnConnect = new JButton("Set frequency");
+				panel_1.add(btnConnect);
+				btnConnect.setBorderPainted(false);
+				
+					btnConnect.setContentAreaFilled(false); 
+					
+			        
+					btnConnect.setFocusPainted(false); 
+					btnConnect.setOpaque(false);
+					
+					btnConnect.setBorder(BorderFactory.createMatteBorder(0,0,2,0,Color.DARK_GRAY));
+					btnConnect.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+						}
+					});
 		
 		resolutionPanel = new JPanel();
 		panel_1.add(resolutionPanel);
@@ -165,15 +181,10 @@ public class ServerHolder extends JPanel {
 		
 				
 				panel = new JPanel();
+				resolutionPanel.add(panel);
 				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-				flowLayout.setHgap(20);
+				flowLayout.setHgap(80);
 				panel.setBackground(Color.WHITE);
-				settingsPanel.add(panel);
-		
-				btnConnect = new JButton("Connect");
-				btnConnect.setBorderPainted(false);
-				btnConnect.setBorder(null);
-				btnConnect.setContentAreaFilled(false); 
 				
 			        
 				btnConnect.setFocusPainted(false); 
@@ -194,15 +205,14 @@ public class ServerHolder extends JPanel {
 					}
 				});
 				panel.add(btnConnect);
-				
-						btnRemove = new JButton("Remove");
+						btnRemove = new JButton("Remove camera");
 						btnRemove.setBorderPainted(false);
-						btnRemove.setBorder(null);
+						
 						btnRemove.setContentAreaFilled(false); 
 					        
 						btnRemove.setFocusPainted(false); 
 						btnRemove.setOpaque(false);
-						btnRemove.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.DARK_GRAY));
+						btnRemove.setBorder(BorderFactory.createMatteBorder(0,0,2,0,Color.DARK_GRAY));
 						panel.add(btnRemove);
 						btnRemove.setAlignmentX(Component.CENTER_ALIGNMENT);
 						btnRemove.addActionListener(new ActionListener() {
