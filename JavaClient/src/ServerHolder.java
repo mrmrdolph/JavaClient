@@ -62,9 +62,12 @@ public class ServerHolder extends JPanel {
 	 * @throws UnknownHostException
 	 */
 	public ServerHolder(Socket s, String ip, int port) {
+		
 		this.socket = s;
 		this.serverIP = ip;
 		this.port = port;
+		
+		this.setMinimumSize(new Dimension(300, 200));
 		//rtprwrwwpoå
 		//pahurdianuhdoakjsdhaklsjfhnoajhflnaskjdhfnlaskjdfhnskjdfnf
 
