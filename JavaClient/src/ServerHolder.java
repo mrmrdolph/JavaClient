@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
 
 
 /**
@@ -51,6 +52,7 @@ public class ServerHolder extends JPanel {
 	private JPanel settingsPanel;
 	private JLabel connectedIPPortlabel;
 	private JPanel panel;
+	private JPanel panel_1;
 //hzdhsdak
 	/**
 	 * Create the panel.
@@ -108,8 +110,20 @@ public class ServerHolder extends JPanel {
 		connectedIPPortlabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		settingsPanel.add(connectedIPPortlabel);
 		
+		panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		settingsPanel.add(panel_1);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		frequencyTextField = new JTextField();
+		
+		panel_1.add(frequencyTextField);
+		frequencyTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		frequencyTextField.setToolTipText("FREQUENCY");
+		frequencyTextField.setColumns(10);
+		
 		resolutionPanel = new JPanel();
-		settingsPanel.add(resolutionPanel);
+		panel_1.add(resolutionPanel);
 		resolutionPanel.setLayout(new BoxLayout(resolutionPanel, BoxLayout.X_AXIS));
 		
 		rdbtnNewRadioButton = new JRadioButton("res1");
@@ -135,20 +149,15 @@ public class ServerHolder extends JPanel {
 		radioButton_1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		resolutionPanel.add(radioButton_1);
 		radioButton_1.addActionListener(actionListener);
-		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnNewRadioButton);
 		group.add(rdbtnRes);
 		group.add(radioButton);
 		group.add(radioButton_1);
 		rdbtnNewRadioButton.setSelected(true);
-		
-		frequencyTextField = new JTextField();
-		frequencyTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		settingsPanel.add(frequencyTextField);
-		frequencyTextField.setToolTipText("FREQUENCY");
-		frequencyTextField.setColumns(10);
+		ButtonGroup group = new ButtonGroup();
 				
 				panel = new JPanel();
+				panel.setBackground(Color.WHITE);
 				settingsPanel.add(panel);
 		
 				btnConnect = new JButton("Connect");
