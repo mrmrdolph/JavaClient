@@ -29,6 +29,12 @@ import java.awt.Component;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
+
+/**
+ * One Server connected GUI
+ * @author David
+ *
+ */
 public class ServerHolder extends JPanel {
 	private JTextField frequencyTextField;
 	private JButton btnConnect;
