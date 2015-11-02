@@ -86,24 +86,29 @@ public class ServerHolder extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int resolutionID = 1;
+				if (rdbtnNewRadioButton.isSelected()) {
+					System.out.println("1");
+					resolutionID = 1;
+				} else if (rdbtnRes.isSelected()) {
+					System.out.println("2");
+					resolutionID = 2;
+				} else if (radioButton.isSelected()) {
+					System.out.println("3");
+					resolutionID = 3;
+				} else if (radioButton_1.isSelected()) {
+					System.out.println("4");
+					resolutionID = 4;
+				} 
 				OutputStream out = null;
 				try {
 					out = new DataOutputStream(socket.getOutputStream());
-					out.write(30);
+					out.write(resolutionID);
 					out.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				
-				if (rdbtnNewRadioButton.isSelected()) {
-					System.out.println("1");
-				} else if (rdbtnRes.isSelected()) {
-					System.out.println("2");
-				} else if (radioButton.isSelected()) {
-					System.out.println("3");
-				} else if (radioButton_1.isSelected()) {
-					System.out.println("4");
-				} 
 			}
 		};
 		//yo momma
@@ -182,6 +187,25 @@ public class ServerHolder extends JPanel {
 				flowLayout.setHgap(80);
 				panel.setBackground(Color.WHITE);
 				
+			        
+				btnConnect.setFocusPainted(false); 
+				btnConnect.setOpaque(false);
+				
+				btnConnect.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.DARK_GRAY));
+				btnConnect.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						String frequency = frequencyTextField.getText().toString();
+						OutputStream out = null;
+						try {
+							out = new DataOutputStream(socket.getOutputStream());
+							out.write(frequency.getBytes());
+							out.close();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				});
+				panel.add(btnConnect);
 						btnRemove = new JButton("Remove camera");
 						btnRemove.setBorderPainted(false);
 						
