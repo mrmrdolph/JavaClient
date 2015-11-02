@@ -57,6 +57,7 @@ public class ClientGui extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		contentPane.add(panel_1, BorderLayout.NORTH);
 		
 		JLabel lblAddCamera = new JLabel("Add camera");
@@ -78,6 +79,7 @@ public class ClientGui extends JFrame {
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.WHITE);
 		panel_2.add(panel_3);
 		
 		JLabel lblIp = new JLabel("I.P");
@@ -95,6 +97,7 @@ public class ClientGui extends JFrame {
 		portTextField.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(Color.WHITE);
 		panel_2.add(panel_4);
 		
 		searchingJLabel = new JLabel("");
@@ -108,7 +111,7 @@ public class ClientGui extends JFrame {
 		panel_4.add(errorMessageJLabel);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(176, 224, 230));
+		panel.setBackground(Color.BLACK);
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		

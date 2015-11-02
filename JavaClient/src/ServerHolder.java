@@ -50,6 +50,7 @@ public class ServerHolder extends JPanel {
 	private JRadioButton radioButton_1;
 	private JPanel settingsPanel;
 	private JLabel connectedIPPortlabel;
+	private JPanel panel;
 //hzdhsdak
 	/**
 	 * Create the panel.
@@ -64,14 +65,17 @@ public class ServerHolder extends JPanel {
 		//rtprwrwwpoå
 		//pahurdianuhdoakjsdhaklsjfhnoajhflnaskjdhfnlaskjdfhnskjdfnf
 
-		setBackground(new Color(176, 224, 230));
+		setBackground(Color.WHITE);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		currentImageJlabel = new JLabel("");
+		currentImageJlabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		currentImageJlabel.setHorizontalAlignment(SwingConstants.CENTER);
+		currentImageJlabel.setIcon(new ImageIcon(ServerHolder.class.getResource("/img/dummy.png")));
 		add(currentImageJlabel);
 		
 		settingsPanel = new JPanel();
+		settingsPanel.setBackground(Color.WHITE);
 		add(settingsPanel);
 		settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
 		
@@ -101,6 +105,7 @@ public class ServerHolder extends JPanel {
 		};
 		//yo momma
 		connectedIPPortlabel = new JLabel("IP " + ip + " --- Port " + port);
+		connectedIPPortlabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		settingsPanel.add(connectedIPPortlabel);
 		
 		resolutionPanel = new JPanel();
@@ -108,18 +113,26 @@ public class ServerHolder extends JPanel {
 		resolutionPanel.setLayout(new BoxLayout(resolutionPanel, BoxLayout.X_AXIS));
 		
 		rdbtnNewRadioButton = new JRadioButton("res1");
+		rdbtnNewRadioButton.setBackground(Color.WHITE);
+		rdbtnNewRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		resolutionPanel.add(rdbtnNewRadioButton);
 		rdbtnNewRadioButton.addActionListener(actionListener);
 		
 		rdbtnRes = new JRadioButton("res2");
+		rdbtnRes.setBackground(Color.WHITE);
+		rdbtnRes.setAlignmentX(Component.CENTER_ALIGNMENT);
 		resolutionPanel.add(rdbtnRes);
 		rdbtnRes.addActionListener(actionListener);
 		
 		radioButton = new JRadioButton("res3");
+		radioButton.setBackground(Color.WHITE);
+		radioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		resolutionPanel.add(radioButton);
 		radioButton.addActionListener(actionListener);
 		
 		radioButton_1 = new JRadioButton("res4");
+		radioButton_1.setBackground(Color.WHITE);
+		radioButton_1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		resolutionPanel.add(radioButton_1);
 		radioButton_1.addActionListener(actionListener);
 		ButtonGroup group = new ButtonGroup();
@@ -130,15 +143,21 @@ public class ServerHolder extends JPanel {
 		rdbtnNewRadioButton.setSelected(true);
 		
 		frequencyTextField = new JTextField();
+		frequencyTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		settingsPanel.add(frequencyTextField);
 		frequencyTextField.setToolTipText("FREQUENCY");
 		frequencyTextField.setColumns(10);
+				
+				panel = new JPanel();
+				settingsPanel.add(panel);
 		
 				btnConnect = new JButton("Connect");
-				settingsPanel.add(btnConnect);
+				panel.add(btnConnect);
+				btnConnect.setAlignmentX(Component.CENTER_ALIGNMENT);
 				
 						btnRemove = new JButton("Remove");
-						settingsPanel.add(btnRemove);
+						panel.add(btnRemove);
+						btnRemove.setAlignmentX(Component.CENTER_ALIGNMENT);
 						btnRemove.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								deleteMe();
