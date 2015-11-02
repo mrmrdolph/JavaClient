@@ -43,6 +43,7 @@ public class ServerHolder extends JPanel {
 	private JRadioButton radioButton;
 	private JRadioButton radioButton_1;
 	private JPanel settingsPanel;
+	private JLabel connectedIPPortlabel;
 //hzdhsdak
 	/**
 	 * Create the panel.
@@ -81,23 +82,20 @@ public class ServerHolder extends JPanel {
 					e1.printStackTrace();
 				}
 				
-				
 				if (rdbtnNewRadioButton.isSelected()) {
 					System.out.println("1");
-					
 				} else if (rdbtnRes.isSelected()) {
 					System.out.println("2");
-					
 				} else if (radioButton.isSelected()) {
 					System.out.println("3");
-					
 				} else if (radioButton_1.isSelected()) {
 					System.out.println("4");
-					
 				} 
-				
 			}
 		};
+		
+		connectedIPPortlabel = new JLabel("IP " + ip + " --- Port " + port);
+		settingsPanel.add(connectedIPPortlabel);
 		
 		resolutionPanel = new JPanel();
 		settingsPanel.add(resolutionPanel);
