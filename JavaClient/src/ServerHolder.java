@@ -167,14 +167,14 @@ public class ServerHolder extends JPanel {
 		
 				btnConnect = new JButton("Connect");
 				btnConnect.setBorderPainted(false);
-				btnConnect.setBorder(null);
+			
 				btnConnect.setContentAreaFilled(false); 
 				
 			        
 				btnConnect.setFocusPainted(false); 
 				btnConnect.setOpaque(false);
 				
-				btnConnect.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.DARK_GRAY));
+				btnConnect.setBorder(BorderFactory.createMatteBorder(0,0,2,0,Color.DARK_GRAY));
 				btnConnect.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 					}
@@ -183,12 +183,12 @@ public class ServerHolder extends JPanel {
 				
 						btnRemove = new JButton("Remove");
 						btnRemove.setBorderPainted(false);
-						btnRemove.setBorder(null);
+						
 						btnRemove.setContentAreaFilled(false); 
 					        
 						btnRemove.setFocusPainted(false); 
 						btnRemove.setOpaque(false);
-						btnRemove.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.DARK_GRAY));
+						btnRemove.setBorder(BorderFactory.createMatteBorder(0,0,2,0,Color.DARK_GRAY));
 						panel.add(btnRemove);
 						btnRemove.setAlignmentX(Component.CENTER_ALIGNMENT);
 						btnRemove.addActionListener(new ActionListener() {
