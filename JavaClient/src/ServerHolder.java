@@ -1,6 +1,8 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,11 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
-import java.awt.Component;
-import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
 
 
 /**
@@ -39,7 +37,7 @@ import java.awt.FlowLayout;
  */
 public class ServerHolder extends JPanel {
 	private JTextField frequencyTextField;
-	private JButton btnConnect;
+	private JButton btnSendFrequency;
 	private JButton btnRemove;
 	private String serverIP;
 	private int port;
@@ -66,6 +64,8 @@ public class ServerHolder extends JPanel {
 		this.socket = s;
 		this.serverIP = ip;
 		this.port = port;
+			
+	
 		
 		this.setMinimumSize(new Dimension(300, 200));
 		//rtprwrwwpoå
@@ -89,24 +89,21 @@ public class ServerHolder extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				OutputStream out = null;
-				try {
-					out = new DataOutputStream(socket.getOutputStream());
-					out.write(30);
-					out.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				
+				String resolutionID = "1";
 				if (rdbtnNewRadioButton.isSelected()) {
 					System.out.println("1");
+					resolutionID = "1";
 				} else if (rdbtnRes.isSelected()) {
 					System.out.println("2");
+					resolutionID = "2";
 				} else if (radioButton.isSelected()) {
 					System.out.println("3");
+					resolutionID = "3";
 				} else if (radioButton_1.isSelected()) {
 					System.out.println("4");
-				} 
+					resolutionID = "4";
+				}
+
 			}
 		};
 		//yo momma
@@ -127,18 +124,18 @@ public class ServerHolder extends JPanel {
 		frequencyTextField.setToolTipText("FREQUENCY");
 		frequencyTextField.setColumns(2);
 		
-				btnConnect = new JButton("Set frequency");
-				panel_1.add(btnConnect);
-				btnConnect.setBorderPainted(false);
+				btnSendFrequency = new JButton("Set frequency");
+				panel_1.add(btnSendFrequency);
+				btnSendFrequency.setBorderPainted(false);
 				
-					btnConnect.setContentAreaFilled(false); 
+					btnSendFrequency.setContentAreaFilled(false); 
 					
 			        
-					btnConnect.setFocusPainted(false); 
-					btnConnect.setOpaque(false);
+					btnSendFrequency.setFocusPainted(false); 
+					btnSendFrequency.setOpaque(false);
 					
-					btnConnect.setBorder(BorderFactory.createMatteBorder(0,0,2,0,Color.DARK_GRAY));
-					btnConnect.addActionListener(new ActionListener() {
+					btnSendFrequency.setBorder(BorderFactory.createMatteBorder(0,0,2,0,Color.DARK_GRAY));
+					btnSendFrequency.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 						}
 					});
@@ -243,11 +240,11 @@ public class ServerHolder extends JPanel {
 //					e.printStackTrace();
 //				}
 				if (socket.isConnected()) {
-					System.out.println("Connected:"+ socket.isConnected());
+//					System.out.println("Connected:"+ socket.isConnected());
 	//				image = scaleDown(readImg(socket),50,50);
 					image = readImg(socket);
 					if (image == null) {
-						System.out.println("image null");
+//						System.out.println("image null");
 						continue;
 					} else  {
 						
@@ -293,8 +290,10 @@ public class ServerHolder extends JPanel {
 
 		
 		public BufferedImage readImg(Socket socket) {
+//			System.out.println("START READING");
 			try {
 				BufferedImage buff = ImageIO.read(socket.getInputStream());
+//				System.out.println("END READING");
 				return buff;
 			} catch (IOException e) {
 				e.printStackTrace();

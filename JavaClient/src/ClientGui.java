@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -86,14 +87,14 @@ public class ClientGui extends JFrame {
 		JLabel lblIp = new JLabel("I.P");
 		panel_3.add(lblIp);
 		
-		ipTextField = new JTextField("192.168.20.249");
+		ipTextField = new JTextField("192.168.20.250");
 		panel_3.add(ipTextField);
 		ipTextField.setColumns(10);
 		
 		JLabel lblPort = new JLabel("PORT");
 		panel_3.add(lblPort);
 		
-		portTextField = new JTextField("8084");
+		portTextField = new JTextField("8080");
 		panel_3.add(portTextField);
 		portTextField.setColumns(10);
 		
@@ -136,6 +137,17 @@ public class ClientGui extends JFrame {
 				        	
 				        }
 				        if (socketConnected) {
+				        	DataOutputStream out = null;
+				    		try {
+				    			out = new DataOutputStream(serverSocket.getOutputStream());
+				    			out.write("2".getBytes());
+				    			out.write("99".getBytes());
+				    			out.flush();
+				    			
+//				    			out.close();
+				    		} catch (IOException e1) {
+				    			e1.printStackTrace();
+				    		}
 				        	ServerHolder server = new ServerHolder(serverSocket, ipTextField.getText(),Integer.parseInt(portTextField.getText()));
 				        	panel.add(server);
 				        }
