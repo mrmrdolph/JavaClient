@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JRadioButton;
+
+import org.omg.CORBA.FREE_MEM;
 
 public class ClientGui extends JFrame {
 
@@ -27,7 +31,12 @@ public class ClientGui extends JFrame {
 	private ErrorJLabel errorMessageJLabel;
 	private JLabel searchingJLabel;
 	private boolean searching = false;
-	
+	private JTextField delayTextField;
+	private JRadioButton res1NewRadioButton;
+	private JRadioButton res2NewRadioButton_1;
+	private JRadioButton res3NewRadioButton_2;
+	private JRadioButton res4NewRadioButton_3;
+	private String resolutionID = "1";
 
 	/**
 	 * Launch the application.
@@ -80,37 +89,92 @@ public class ClientGui extends JFrame {
 		panel_1.add(panel_2);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.WHITE);
-		panel_2.add(panel_3);
+		JPanel ipPortPanel = new JPanel();
+		ipPortPanel.setBackground(Color.WHITE);
+		panel_2.add(ipPortPanel);
 		
 		JLabel lblIp = new JLabel("I.P");
-		panel_3.add(lblIp);
+		ipPortPanel.add(lblIp);
 		
-		ipTextField = new JTextField("192.168.20.250");
-		panel_3.add(ipTextField);
+		ipTextField = new JTextField("192.168.20.249");
+		ipPortPanel.add(ipTextField);
 		ipTextField.setColumns(10);
 		
 		JLabel lblPort = new JLabel("PORT");
-		panel_3.add(lblPort);
+		ipPortPanel.add(lblPort);
 		
 		portTextField = new JTextField("8080");
-		panel_3.add(portTextField);
+		ipPortPanel.add(portTextField);
 		portTextField.setColumns(10);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(Color.WHITE);
-		panel_2.add(panel_4);
+        ActionListener actionListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resolutionID = "1";
+				if (res1NewRadioButton.isSelected()) {
+					System.out.println("1");
+					resolutionID = "1";
+				} else if (res2NewRadioButton_1.isSelected()) {
+					System.out.println("2");
+					resolutionID = "2";
+				} else if (res3NewRadioButton_2.isSelected()) {
+					System.out.println("3");
+					resolutionID = "3";
+				} else if (res4NewRadioButton_3.isSelected()) {
+					System.out.println("4");
+					resolutionID = "4";
+				}
+
+			}
+		};
+		
+		JPanel radioButtonPanel = new JPanel();
+		panel_2.add(radioButtonPanel);
+		
+		res1NewRadioButton = new JRadioButton("R1");
+		radioButtonPanel.add(res1NewRadioButton);
+		res1NewRadioButton.addActionListener(actionListener);
+		
+		res2NewRadioButton_1 = new JRadioButton("R2");
+		radioButtonPanel.add(res2NewRadioButton_1);
+		res2NewRadioButton_1.addActionListener(actionListener);
+		
+		res3NewRadioButton_2 = new JRadioButton("R3");
+		radioButtonPanel.add(res3NewRadioButton_2);
+		res3NewRadioButton_2.addActionListener(actionListener);
+		
+		res4NewRadioButton_3 = new JRadioButton("R4");
+		radioButtonPanel.add(res4NewRadioButton_3);
+		res4NewRadioButton_3.addActionListener(actionListener);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(res1NewRadioButton);
+		group.add(res2NewRadioButton_1);
+		group.add(res3NewRadioButton_2);
+		group.add(res4NewRadioButton_3);
+		res1NewRadioButton.setSelected(true);
+		
+		JPanel delayPanel = new JPanel();
+		panel_2.add(delayPanel);
+		
+		delayTextField = new JTextField();
+		delayPanel.add(delayTextField);
+		delayTextField.setColumns(10);
+		
+		JPanel errorMsgPanel = new JPanel();
+		errorMsgPanel.setBackground(Color.WHITE);
+		panel_2.add(errorMsgPanel);
 		
 		searchingJLabel = new JLabel("");
 		searchingJLabel.setForeground(Color.BLACK);
 		searchingJLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panel_4.add(searchingJLabel);
+		errorMsgPanel.add(searchingJLabel);
 		
 		errorMessageJLabel = new ErrorJLabel(""); 
 		errorMessageJLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		errorMessageJLabel.setForeground(Color.RED);
-		panel_4.add(errorMessageJLabel);
+		errorMsgPanel.add(errorMessageJLabel);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLACK);
@@ -140,11 +204,10 @@ public class ClientGui extends JFrame {
 				        	DataOutputStream out = null;
 				    		try {
 				    			out = new DataOutputStream(serverSocket.getOutputStream());
-				    			out.write("2".getBytes());
-				    			out.write("99".getBytes());
+				    			out.write(resolutionID.getBytes());  //set by radio buttons!
+				    			System.out.println("test: "+getDelay(delayTextField.getText().toString()));
+				    			out.write(getDelay(delayTextField.getText().toString()).getBytes()); // 6 BYTES/chars!! range should be 0 - 30000 (30000 equals about 30 seconds)
 				    			out.flush();
-				    			
-//				    			out.close();
 				    		} catch (IOException e1) {
 				    			e1.printStackTrace();
 				    		}
@@ -160,6 +223,15 @@ public class ClientGui extends JFrame {
 			}
 		});
 		
+	}
+	
+	private static String getDelay(String input) {
+		String result = "";
+		for (int i=0; i<6-input.length();i+=1) {
+			result += "0";
+		}
+		result += input;
+		return result;
 	}
 
 }

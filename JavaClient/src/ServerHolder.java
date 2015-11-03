@@ -215,8 +215,8 @@ public class ServerHolder extends JPanel {
 	}
 
 	private void deleteMe() {
-		Container parent = btnRemove.getParent(); // this JPanel
-		Container parentparent = parent.getParent(); // JFrame
+		Container parent = btnRemove.getParent().getParent().getParent().getParent().getParent(); //if not working add another getParent(), cant have enough parents
+		Container parentparent = parent.getParent(); 
 		parentparent.remove(parent);
 		parentparent.validate();
 		parentparent.repaint();
